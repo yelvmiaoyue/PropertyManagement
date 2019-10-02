@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="mapper.AccountMapper">
+	<select id="selAccountSearch" resultType="pojo.Account">
+		select * from user
+		<where>
+			<if test="user.id!=0">
+				and id=#{user.id}
+			</if>
+			<if test="user.username!=''">
+				and username=#{user.username}
+			</if>
+			<if test="user.rid!=-1">
+				and rid=#{user.rid}
+			</if>
+		</where>
+		order by id asc 
+		limit #{data.pageStart},#{data.pageSize}
+	</select>
+	
+	<select id="selAccountAll" resultType="int">
+		select count(id) from user 
+		<where>
+			<if test="user.id!=0">
+				and id=#{user.id}
+			</if>
+			<if test="user.username!=''">
+				and username=#{user.username}
+			</if>
+			<if test="user.rid!=-1">
+				and rid=#{user.rid}
+			</if>
+		</where>
+	</select>
+</mapper>

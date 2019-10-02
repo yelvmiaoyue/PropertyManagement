@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="mapper.BillMapper">
+	<select id="selBillSearch" resultType="pojo.Bill">
+		select * from bill
+		<where>
+			<if test="bill.id!=0">
+				and id=#{bill.id}
+			</if>
+			<if test="bill.type!=-1">
+				and type=#{bill.type}
+			</if>
+			<if test="bill.status!=-1">
+				and status=#{bill.status}
+			</if>
+		</where>
+		order by id desc 
+		limit #{data.pageStart},#{data.pageSize}
+	</select>
+	
+	<select id="selTotalAll" resultType="int">
+		select count(id) from bill 
+		<where>
+			<if test="bill.id!=0">
+				and id=#{bill.id}
+			</if>
+			<if test="bill.type!=-1">
+				and type=#{bill.type}
+			</if>
+			<if test="bill.status!=-1">
+				and status=#{bill.status}
+			</if>
+		</where>
+	</select>
+</mapper>

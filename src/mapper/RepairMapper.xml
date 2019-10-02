@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="mapper.RepairMapper">
+	<select id="selRepairSearch" resultType="pojo.RepairRecord">
+		select * from repairRecord 
+		<where>
+			<if test="record.id!=0">
+				and id=#{record.id}
+			</if>
+			<if test="record.building!=0">
+				and building=#{record.building}
+			</if>
+			<if test="record.room!=0">
+				and room=#{record.room}
+			</if>
+			<if test="record.status!=-1">
+				and status=#{record.status}
+			</if>
+		</where>
+		order by id desc 
+		limit #{data.pageStart},#{data.pageSize}
+	</select>
+	
+	<select id="selRepairRecordAll" resultType="int">
+		select count(id) from repairRecord 
+		<where>
+			<if test="record.id!=0">
+				and id=#{record.id}
+			</if>
+			<if test="record.building!=0">
+				and building=#{record.building}
+			</if>
+			<if test="record.room!=0">
+				and room=#{record.room}
+			</if>
+			<if test="record.status!=-1">
+				and status=#{record.status}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="mapper.MenuMapper">
+	<resultMap type="pojo.Menu" id="mmap">
+		<id column="id" property="id" />
+		<result column="link" property="link" />
+		<result column="name" property="name" />
+		<result column="pid" property="pid" />
+		<collection property="children" select="selByRid"
+			column="{rid=rid,pid=id}">
+		</collection>
+	</resultMap>
+	<select id="selByRid" resultMap="mmap">
+		select m.* ,#{rid} rid
+		from menu
+		m join
+		role_menu r on r.mid = m.id
+		where r.rid = #{rid} and m.pid=#{pid}
+	</select>
+</mapper>

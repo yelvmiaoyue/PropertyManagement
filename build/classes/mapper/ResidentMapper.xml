@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namesapce:理解成实现类的全路径(包名+类名) -->
+<mapper namespace="mapper.ResidentMapper">
+	<select id="selResidentSearch" resultType="pojo.Resident">
+		select * from resident
+		<where>
+			<if test="resident.building!=0">
+				and building=#{resident.building}
+			</if>
+			<if test="resident.room!=0">
+				and room=#{resident.room}
+			</if>
+		</where>
+		order by building asc,room asc 
+		limit #{data.pageStart},#{data.pageSize}
+	</select>
+	
+	<select id="selTotalAll" resultType="int">
+		select count(id) from resident 
+		<where>
+			<if test="resident.building!=0">
+				and building=#{resident.building}
+			</if>
+			<if test="resident.room!=0">
+				and room=#{resident.room}
+			</if>
+		</where>
+	</select>
+</mapper>
